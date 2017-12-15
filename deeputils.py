@@ -21,7 +21,7 @@ def copy_some(src_dir, dst_dir, split, extensions):
             copyfile(shuf2, os.path.join(dst_dir, rel_path2))
 
 
-def split_train(base_dir, new_dir_name, split=0.1, extensions=['jpg']):
+def split_train(base_dir, new_dir_name="valid", split=0.1, extensions=['jpg']):
     # this function splits train set to train & valid/test
 
     # create valid dirs
@@ -29,9 +29,9 @@ def split_train(base_dir, new_dir_name, split=0.1, extensions=['jpg']):
     new_dir = os.path.join(base_dir, new_dir_name)
     maybe_copy_dir_struct(train, new_dir)
 
-    g_train = glob(os.path.join(train, '*.' + extensions[0]), recursive=True)
+    g_train = glob(os.path.join(train, '**/*.' + extensions[0]), recursive=True)
     num_train = len(g_train)
-    g_valid = glob(os.path.join(new_dir, '*.' + extensions[0]), recursive=True)
+    g_valid = glob(os.path.join(new_dir, '**/*.' + extensions[0]), recursive=True)
     num_valid = len(g_valid)
 
     num_valid_target = (num_train + num_valid) * split
