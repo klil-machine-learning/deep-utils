@@ -58,9 +58,15 @@ def gen_sample(dir, split=0.1, extensions=['jpg']):
 
     train = os.path.join(dir, 'train')
     if os.path.exists(train):
+        filenames = os.listdir(train)
         sample_train = os.path.join(sample, 'train')
-        maybe_copy_dir_struct(train, sample_train)
-        copy_some(train, sample_train, split=split, extensions=extensions)
+        maybe_create_dir(sample_train)
+        for filename in filenames:
+            if os.path.isdir(os.path.join(train, filename)):
+                train_subdir = os.path.join(train, filename)
+                sample_train_subdir = os.path.join(sample_train, filename)
+                maybe_create_dir(sample_train_subdir)
+                copy_some(train_subdir, sample_train_subdir, split=split, extensions=extensions)
 
     test = os.path.join(dir, 'test')
     if os.path.exists((test)):
@@ -70,9 +76,15 @@ def gen_sample(dir, split=0.1, extensions=['jpg']):
 
     valid = os.path.join(dir, 'valid')
     if os.path.exists(valid):
+        filenames = os.listdir(valid)
         sample_valid = os.path.join(sample, 'valid')
-        maybe_copy_dir_struct(test, sample_valid)
-        copy_some(valid, sample_valid, split=split, extensions=extensions)
+        maybe_create_dir(sample_valid)
+        for filename in filenames:
+            if os.path.isdir(os.path.join(valid, filename)):
+                valid_subdir = os.path.join(valid, filename)
+                sample_valid_subdir = os.path.join(sample_valid, filename)
+                maybe_create_dir(sample_valid_subdir)
+                copy_some(valid_subdir, sample_valid_subdir, split=split, extensions=extensions)
 
 
 
