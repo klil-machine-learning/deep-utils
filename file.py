@@ -1,7 +1,8 @@
 from shutil import copyfile, move
 from glob import glob
 import numpy as np
-from baseutils import *
+import bcolz
+import os
 
 def copy_some(src_dir, dst_dir, split, extensions):
     g_src = glob(os.path.join(src_dir, '*.' + extensions[0]), recursive=True)
@@ -86,6 +87,26 @@ def gen_sample(dir, split=0.1, extensions=['jpg']):
                 maybe_create_dir(sample_valid_subdir)
                 copy_some(valid_subdir, sample_valid_subdir, split=split, extensions=extensions)
 
+def maybe_create_dir(dir):
+    if os.path.exists(dir):
+        return
+    os.makedirs(dir)
+
+
+def maybe_copy_dir_struct(src_dir, dst_dir):
+    maybe_create_dir(dst_dir)
+    for o in os.listdir(src_dir):
+        if os.path.isdir(os.path.join(src_dir, o)):
+            maybe_copy_dir_struct(os.path.join(src_dir, o), os.path.join(dst_dir, o))
+
+
+def save_array(fname, arr):
+    c=bcolz.carray(arr, rootdir=fname, mode='w')
+    c.flush()
+
+
+def load_array(fname):
+    return bcolz.open(fname)[:]
 
 
 
