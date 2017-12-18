@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from keras.utils.np_utils import to_categorical
 
 

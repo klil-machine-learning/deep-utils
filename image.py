@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from keras.preprocessing import image
 
 def get_data(path, target_size=(244, 244)):

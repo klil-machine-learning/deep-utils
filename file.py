@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from shutil import copyfile, move
 from glob import glob
 import numpy as np
